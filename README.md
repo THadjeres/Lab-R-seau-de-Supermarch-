@@ -57,22 +57,6 @@ Objectifs techniques :
 
 > 💡 ![Topologie du lab](images/Topologie.png).
 
-```mermaid
-graph TD
-    PAY["PAYMENT SERVER<br/>198.51.100.2"]
-    ISP["FAI-ISP_R1<br/>(Internet simulé)"]
-    EDGE["EDGE-R1<br/>NAT/PAT"]
-    L3["L3-SW1<br/>Cœur : inter-VLAN, DHCP, ACL"]
-    SDV["SURFACE-DE-VENTE<br/>VLAN 10, 20, 40, 60"]
-    AB["ARRIERE-BOUTIQUE<br/>VLAN 30, 50"]
-
-    PAY ---|"198.51.100.0/30"| ISP
-    ISP ---|"203.0.113.0/24"| EDGE
-    EDGE ---|"10.0.0.0/30"| L3
-    L3 ---|"Trunk 802.1Q"| SDV
-    L3 ---|"Trunk 802.1Q"| AB
-```
-
 ### Équipements
 
 | Hostname | Modèle | Rôle |
