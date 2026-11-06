@@ -343,3 +343,14 @@ ip ssh version 2
     ├── supermarche.pkt            # Fichier Packet Tracer
 └── README.md                 
 ```
+
+## Utilisation
+
+1. Installer [Cisco Packet Tracer](https://www.netacad.com/).
+2. Ouvrir le fichier `.pkt` du dossier `packet-tracer/`.
+3. Consulter les configurations dans `configs/` ou directement via le CLI de chaque équipement.
+
+## Auteur
+
+**\[Tahar HAdjeres]** : en reconversion vers l'IT, orienté technicien réseau.
+[LinkedIn](https://www.linkedin.com/in/tahar-hadjeres-b22a45171) · [GitHub](https://github.com/THadjeres)
