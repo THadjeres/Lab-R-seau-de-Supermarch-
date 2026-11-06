@@ -1,0 +1,275 @@
+!
+version 12.2(37)SE1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname L3-SW1
+!
+!
+enable secret 5 "MOT_DE_PASSE"
+!
+!
+ip dhcp excluded-address 192.168.10.1 192.168.10.20
+ip dhcp excluded-address 192.168.20.1 192.168.20.20
+ip dhcp excluded-address 192.168.30.1 192.168.30.20
+ip dhcp excluded-address 192.168.40.1 192.168.40.20
+ip dhcp excluded-address 192.168.60.1 192.168.60.20
+!
+ip dhcp pool PDV
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ dns-server 198.51.100.2
+ip dhcp pool CAISSE-AUTOMATIQUE
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 198.51.100.2
+ip dhcp pool ARRIERE-BOUTIQUE
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.1
+ dns-server 198.51.100.2
+ip dhcp pool TERMINAUX-MOBILE
+ network 192.168.40.0 255.255.255.0
+ default-router 192.168.40.1
+ dns-server 198.51.100.2
+ip dhcp pool INVITE-WIFI
+ network 192.168.60.0 255.255.255.0
+ default-router 192.168.60.1
+ dns-server 198.51.100.2
+!
+!
+ip routing
+!
+!
+!
+!
+username admin privilege 15 secret 5 "MOT_DE_PASSE"
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+ip domain-name store.local
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+ no switchport
+ ip address 10.0.0.2 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/2
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/3
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/4
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/5
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/6
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/7
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/8
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/9
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/10
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/11
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/12
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/13
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/14
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/15
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/16
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/17
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/18
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/19
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/20
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/21
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/22
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/23
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/24
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface GigabitEthernet0/1
+ description TRUNK-SURFACE-DE-VENTE_SW
+ switchport trunk allowed vlan 10,20,40,60,99
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+ description TRUNK-ARRIERE-BOUTIQUE_SW
+ switchport trunk allowed vlan 30,50,99
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ description PDV-GW
+ mac-address 0090.0c30.aa01
+ ip address 192.168.10.1 255.255.255.0
+!
+interface Vlan20
+ description CAISSE-AUTOMATIQUE-GW
+ mac-address 0090.0c30.aa02
+ ip address 192.168.20.1 255.255.255.0
+!
+interface Vlan30
+ description ARRIERE-BOUTIQUE-GW
+ mac-address 0090.0c30.aa03
+ ip address 192.168.30.1 255.255.255.0
+!
+interface Vlan40
+ description TERMINAUX-MOBILE-GW
+ mac-address 0090.0c30.aa04
+ ip address 192.168.40.1 255.255.255.0
+!
+interface Vlan50
+ description IMPRIMANTE-GW
+ mac-address 0090.0c30.aa05
+ ip address 192.168.50.1 255.255.255.0
+!
+interface Vlan60
+ description INVITE-WIFI-GW
+ mac-address 0090.0c30.aa06
+ ip address 192.168.60.1 255.255.255.0
+ ip access-group FILTRE-INVITE in
+!
+interface Vlan99
+ description MANAGEMET-GW
+ mac-address 0090.0c30.aa07
+ ip address 192.168.99.1 255.255.255.0
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 10.0.0.1 
+!
+ip flow-export version 9
+!
+!
+ip access-list extended FILTRE-INVITE
+ permit udp any eq bootpc any eq bootps
+ deny ip 192.168.60.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.60.0 0.0.0.255 any
+!
+banner motd #
+AUTHORIZED ACCESS ONLY
+#
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+end
+
