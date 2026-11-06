@@ -55,7 +55,7 @@ Objectifs techniques :
 
 ## 🗺️ Schéma réseau
 
-> 💡 Ajouter ici une capture d'écran de la topologie Packet Tracer : `!(images/Topologie.png)`
+> 💡 ![Topologie du lab](images/Topologie.png).
 
 ```mermaid
 graph TD
