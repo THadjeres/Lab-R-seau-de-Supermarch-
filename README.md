@@ -55,7 +55,7 @@ Objectifs techniques :
 
 ## 🗺️ Schéma réseau
 
-> 💡 Ajouter ici une capture d'écran de la topologie Packet Tracer : `![Topologie](docs/topologie.png)`
+> 💡 Ajouter ici une capture d'écran de la topologie Packet Tracer : `![Topologie](images/Topologie.png)`
 
 ```mermaid
 graph TD
@@ -216,7 +216,7 @@ ip access-list extended FILTRE-INVITE
 | VLAN 1 désactivé | Les 3 switches | SVI VLAN 1 en shutdown, sans adresse |
 | NAT/PAT | EDGE-R1 | Masque les adresses internes derrière une adresse publique |
 
-> 🔐 Les mots de passe du lab ne sont volontairement pas publiés dans ce dépôt.
+> 🔐 Les mots de passe sont dans le fichier documentation_reseau.docx.
 
 ---
 
@@ -307,27 +307,23 @@ ip ssh version 2
 - Second routeur de bordure et second FAI avec routage de secours.
 - Root bridge STP explicite sur L3-SW1.
 - Serveurs DNS et DHCP dédiés, séparés du cœur et du serveur de paiement.
-- Nommage des VLANs (`name`) et documentation à jour de chaque port.
 
 ---
 
 ## 📚 Ce que j'ai appris
 
-> ✍️ **À personnaliser** : remplace ou complète ces points par tes propres difficultés réelles. Les recruteurs apprécient les anecdotes vécues (le bug, comment tu l'as trouvé, comment tu l'as résolu).
-
 **Difficultés rencontrées et solutions**
 
-- **Les invités n'obtenaient pas d'adresse IP.** L'ACL `FILTRE-INVITE` bloquait le DHCP à cause du `deny` implicite en fin de liste. J'ai compris que le DHCP Discover part de `0.0.0.0` vers `255.255.255.255` et qu'il faut l'autoriser explicitement (`permit udp any eq bootpc any eq bootps`) avant le `deny`.
-- **Choisir où placer les fonctions.** Le DHCP et l'inter-VLAN sur le switch L3, le NAT sur le routeur de bordure : j'ai appris à répartir les rôles entre couche 2 et couche 3.
-- **Le retour du trafic NATé.** Sans route de retour `192.168.0.0/16` via `10.0.0.2` sur EDGE-R1, les paquets sortaient mais les réponses ne revenaient pas.
+- **Les invités n'obtenaient pas d'adresse IP.** L'ACL `FILTRE-INVITE` bloquait le DHCP à cause du `deny` en fin de liste. J'ai compris qu'il faut l'autoriser explicitement (`permit udp any eq bootpc any eq bootps`) avant le `deny`.
+- **Séparation des fonctions.** Le DHCP et l'inter-VLAN sur le switch L3, le NAT sur le routeur de bordure : j'ai appris à répartir les rôles entre couche 2 et couche 3.
 - **Relier un lien routé à un switch L3.** Passer le port Fa0/1 en `no switchport` pour obtenir une interface de couche 3 vers le routeur.
-- **Résolution de noms.** Faire fonctionner `payment.store.com` m'a montré le rôle du DNS distribué par DHCP.
+- **Faire fonctionner `payment.store.com` m'a montré le rôle du DNS distribué par DHCP.
 
 **Ce que j'en retiens**
 
-- Un **audit de sa propre configuration** est indispensable : j'ai identifié moi-même des failles (invités qui atteignent le serveur de paiement, absence de filtrage inter-VLAN, DTP actif) et documenté les corrections.
+- J'ai identifié moi-même certaines failles (invités qui atteignent le serveur de paiement, absence de filtrage inter-VLAN) et documenté les corrections.
 - **Tester méthodiquement** (12 tests de validation) fait gagner plus de temps que de corriger au hasard.
-- **Documenter** (plan d'adressage, matrice des flux, limites) est aussi important que configurer.
+- **Documenter** (plan d'adressage, matrice des flux) est aussi important que configurer.
 
 ---
 
@@ -343,14 +339,23 @@ ip ssh version 2
 
 ---
 
-## 📁 Contenu du dépôt (suggestion)
+## 📁 Contenu du dépôt
 
 ```
 .
-├── README.md
-├── supermarche.pkt            # Fichier Packet Tracer
+├── configs/
+    ├── ARRIERE-BOUTIQUE-(Back-Store)_runnning-config.txt
+    ├── EDGE-R1_running-config.txt
+    ├── ISP_running-config.txt
+    ├── M3-SW1_running-config.txt
+    ├── Payment-Server_Config1.png
+    ├── Payment-Server_Config2.png
+    ├── SURFACE-DE-VENTE_Config.txt
 ├── docs/
-│   ├── topologie.png          # Capture de la topologie
-│   └── Documentation_Reseau_Supermarche.docx
-└── configs/                   # Exports des running-config (sans mots de passe)
+    ├── Documentation_Reseau_Supermarche.docx
+├── images/
+    ├── Topologie.png
+├── packet-tracer/
+    ├── supermarche.pkt            # Fichier Packet Tracer
+└── README.md                 
 ```
