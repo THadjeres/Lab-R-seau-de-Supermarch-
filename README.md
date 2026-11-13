@@ -1,4 +1,4 @@
-# 🛒 Réseau d'un supermarché : Cisco Packet Tracer
+# 🛒 Réseau d'un supermarche : Cisco Packet Tracer
 
 Lab de conception et de sécurisation du réseau d'un supermarché : segmentation par VLAN, routage inter-VLAN sur switch L3, DHCP, NAT/PAT, DNS, isolation du Wi-Fi invité et durcissement des équipements.
 
@@ -353,4 +353,4 @@ ip ssh version 2
 ## Auteur
 
 **\[Tahar Hadjeres]** : en reconversion vers l'IT, orienté technicien réseau.
-[LinkedIn](https://www.linkedin.com/in/tahar-hadjeres-b22a45171) · [GitHub](https://github.com/THadjeres)
+[LinkedIn](https://www.linkedin.com/in/tahar-hadjeres) · [GitHub](https://github.com/THadjeres)
